@@ -12,6 +12,8 @@ const config = require('config')
 const bcrypt = require('bcrypt');
 const { Log } = require('../models/log');
 const sendMail = require('../mail/data');
+const validator = require('../middleware/validate')
+const objectId = require('../middleware/objectId_validation')
 
 Fawn.init('mongodb://127.0.0.1:27017/stationary')
   
@@ -20,10 +22,7 @@ async function getUserWithEmail(email){
     return user
 }
 
-router.post('/', [auth_middle, authAdminManager],async(req, res) =>{
-    try{
-    const { error } = validate(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
+router.post('/', [auth_middle, authAdminManager, validator(validate)],async(req, res) =>{
     let tempoUserId = req.body.id
     let status = req.body.status
     let tempoUser = await getSingleUnconfirmedUser(tempoUserId)
@@ -63,15 +62,9 @@ router.post('/', [auth_middle, authAdminManager],async(req, res) =>{
             return res.send("Succeded").status(200)
 
       }
-    }
-    catch(err){
-      console.log(err)
-      return res.status(400).send("Error occured")
-    }
 })
 
-router.put('/password/:id', auth_middle ,async(req, res) =>{
-  try{
+router.put('/password/:id', [auth_middle, validator(validatePassword), objectId] ,async(req, res) =>{
     if (req.user !=  req.params.id){
       return res.status(401).send("Access denied")
     }
@@ -92,12 +85,6 @@ router.put('/password/:id', auth_middle ,async(req, res) =>{
     await user.save();
 
     return res.send("Successful")
- 
-  }
-  catch(err){
-    console.log(err)
-    return res.status(400).send("Error occured")
-  }
 })
 
 router.get("/", async (req, res)=>{
@@ -128,8 +115,7 @@ router.get("/employees",auth_middle, async (req, res)=>{
   return res.send(users)
 })
 
-router.put("/me",auth_middle, async (req, res)=>{
-  try{
+router.put("/me",[auth_middle,validator(validateChange) ],async (req, res)=>{
     const { error } = validateChange(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
     
@@ -144,12 +130,6 @@ router.put("/me",auth_middle, async (req, res)=>{
     await user.save();
 
     return res.send("Successful")
- 
-  }
-  catch(err){
-    console.log(err)
-    return res.status(400).send("Error occured")
-  }
 })
 
 

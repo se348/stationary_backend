@@ -2,52 +2,56 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    name: {
-      type: String,
-      required: true,
-      minlength: 3,
-      maxlength: 70,
-      trim: true
-    },
-    description: {
-      type: String,
-      minlength: 5,
-      maxlength: 1024,
-    },
-    packageAmount: {
-        type: Number,
-        required: true,
-        min: 0,
-        set: function(v){
-            return Math.round(v)
-        },
-        get: function(v){
-            return Math.round(v)
-        }
-      },
-    individualQuantity: {
+  prodImage: {
+    type: String,
+    //required: true
+  },  
+  name: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 70,
+    trim: true
+  },
+  description: {
+    type: String,
+    minlength: 5,
+    maxlength: 1024,
+  },
+  packageAmount: {
       type: Number,
       required: true,
-      min:0,
+      min: 0,
+      set: function(v){
+          return Math.round(v)
+      },
+      get: function(v){
+          return Math.round(v)
+      }
     },
-    measurement:{
-        type: String,
-        required: true,
-        lowercase: true,
-        trim: true,
-    },
-    price:{
-        type: Number,
-        required: true,
-        min: 0
-    },
-    category:{
-        type: String,
-        default: "none",
-        lowercase: true,
-        trim: true,
-    }
-  });
+  individualQuantity: {
+    type: Number,
+    required: true,
+    min:0,
+  },
+  measurement:{
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+  },
+  price:{
+      type: Number,
+      required: true,
+      min: 0
+  },
+  category:{
+      type: String,
+      default: "none",
+      lowercase: true,
+      trim: true,
+  }
+});
 
 
   const Product  = mongoose.model('Product',productSchema)

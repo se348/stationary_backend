@@ -1,5 +1,6 @@
 {
     "Key": "",
     "Email": "",
-    "Pass": ""
+    "Pass": "",
+    "db": "mongodb://localhost/stationary"
 }
