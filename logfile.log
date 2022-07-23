@@ -947,3 +947,8 @@
 {"level":"info","message":"Connected to mongodb://localhost/stationary","useNewUrlParser":true,"useUnifiedTopology":true}
 {"level":"info","message":"Listening on port 3000..."}
 {"level":"info","message":"Connected to mongodb://localhost/stationary","useNewUrlParser":true,"useUnifiedTopology":true}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/stationary","useNewUrlParser":true,"useUnifiedTopology":true}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/stationary","useNewUrlParser":true,"useUnifiedTopology":true}

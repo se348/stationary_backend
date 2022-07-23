@@ -33,7 +33,8 @@ router.post('/', [auth_middle, authAdminManager, validator(validate)],async(req,
     let the_user = await User.findById(req.user)
     if (status ==0){
       let log =new Log({
-        logString: `${the_user} declined the registration of ${tempoUser.name}`
+        logString: `${the_user} declined the registration of ${tempoUser.name}`,
+        actorsInvolved: [the_user._id, tempoUser._id]
       })
         await log.save();
 
@@ -44,7 +45,8 @@ router.post('/', [auth_middle, authAdminManager, validator(validate)],async(req,
     if (status==1){
 
       let log =new Log({
-        logString: `${the_user} accepted the registration of ${tempoUser.name}`
+        logString: `${the_user} accepted the registration of ${tempoUser.name}`,
+        actorsInvolved: [the_user._id, tempoUser._id]
       })
         await log.save();
           var task = Fawn.Task();

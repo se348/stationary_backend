@@ -64,7 +64,8 @@ router.post("/",[auth_middle ,authAdminManager, uploads.single('image'), validat
 
         let the_user = await User.findById(req.user)
         let log = new Log({
-           logString: `${the_user.name} added ${product.packageAmount} pieces of ${product.name}`
+           logString: `${the_user.name} added ${product.packageAmount} pieces of ${product.name}`,
+           actorsInvolved: [the_user._id]
         })
         await log.save()
 
@@ -93,7 +94,8 @@ router.put("/:id",[auth_middle ,authAdminManager, uploads.single('image'), objec
     await product.save()
     let the_user = await User.findById(req.user)
     let log = new Log({
-        logString: `${the_user.name} modified attributes of ${product.name}`
+        logString: `${the_user.name} modified attributes of ${product.name}`,
+        actorsInvolved: [the_user._id]
         })
         await log.save()
 
@@ -104,7 +106,8 @@ router.delete("/:id",[auth_middle,authAdminManager, objectId] ,async(req, res) =
     let product = await Product.findByIdAndRemove(req.params.id)
     let the_user = await User.findById(req.user)
     let log = new Log({
-        logString: `${the_user.name} deleted the product ${product.name}`
+        logString: `${the_user.name} deleted the product ${product.name}`,
+        actorsInvolved: [the_user._id]
         })
         await log.save()
 

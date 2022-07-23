@@ -41,7 +41,8 @@ router.post("/",[auth_middle,validator(validateTemporaryOrder)], async(req, res)
     }
     
     const log = new Log({
-        logString : `${user.name} ordered ${temporaryOrder.quantity} pieces of ${product.name}`
+        logString : `${user.name} ordered ${temporaryOrder.quantity} pieces of ${product.name}`,
+        actorsInvolved: [user._id]
     })
     await temporaryOrder.save();
     await log.save()
@@ -70,7 +71,8 @@ router.put("/:id",[auth_middle,validator(validateOrder), objectId ],async(req, r
     if (temporaryOrder.status ==1){
         let packageAmount  =product.packageAmount- temporaryOrder.quantity
         const log = new Log({
-            logString : `${user.name} approved the order of ${userOfproduct.name}, ${temporaryOrder.quantity} pieces of ${product.name}`
+            logString : `${user.name} approved the order of ${userOfproduct.name}, ${temporaryOrder.quantity} pieces of ${product.name}`,
+            actorsInvolved: [user._id, userOfproduct._id]
         })
 
         var task = Fawn.Task();
@@ -89,7 +91,8 @@ router.put("/:id",[auth_middle,validator(validateOrder), objectId ],async(req, r
         await TemporaryOrder.findByIdAndRemove(temporaryOrder._id)
         
         const log = new Log({
-            logString : `${user.name} declined the order of ${userOfproduct.name}, ${temporaryOrder.quantity} pieces of ${product.name}`
+            logString : `${user.name} declined the order of ${userOfproduct.name}, ${temporaryOrder.quantity} pieces of ${product.name}`,
+            actorsInvolved: [user._id, userOfproduct._id]
         })
 
         await log.save()
