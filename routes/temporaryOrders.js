@@ -10,7 +10,8 @@ const Fawn = require('fawn');
 const sendMail = require('../mail/data');
 const validator = require('../middleware/validate')
 const objectId = require('../middleware/objectId_validation')
-//Fawn.init('mongodb://127.0.0.1:27017/stationary')
+
+
 router.get('/',auth_middle, async (req, res) => {
     const temporaryOrder =await TemporaryOrder.find();
     return res.send(temporaryOrder)
@@ -51,7 +52,6 @@ router.post("/",[auth_middle,validator(validateTemporaryOrder)], async(req, res)
 
 })
 
-//user fawn here
 router.put("/:id",[auth_middle,validator(validateOrder), objectId ],async(req, res) =>{
     
     if (req.body.status!= 1 && req.body.status!=-1){
