@@ -33,15 +33,17 @@ Follow these steps to set up the project locally:
 
 2. Clone the repository:
 
-   '''bash
+   ```bash
    git clone https://github.com/se348/stationary_backend.git
    cd stationary-importer
-  '''
+  ```
 
 3. Install dependencies:
-   '''bash
+
+   ```bash
   npm install
-   '''
+   ```
+
 4. Configure MongoDB:
 
 Install MongoDB and ensure it is running on your local machine or a remote server.
